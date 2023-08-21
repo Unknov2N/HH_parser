@@ -1,15 +1,23 @@
 ### HH_parser
 
-1. __get_proxy_list__ выгружает из _proxylist.geonode.com_ в _rc/proxylist.txt_ актуальные прокси (~5000 шт)
-2. **get_hrefs.py** получает все ссылки на вакансии в ___hh.ru-hrefs.csv___
-(сделано, но надо учесть подгрузку через js 
-https://ru.stackoverflow.com/questions/1229289/requests-%d0%bd%d0%b5-%d0%bf%d0%be%d0%b4%d0%b3%d1%80%d1%83%d0%b6%d0%b0%d0%b5%d1%82-%d1%81%d1%82%d1%80%d0%b0%d0%bd%d0%b8%d1%86%d1%83-%d1%86%d0%b5%d0%bb%d0%b8%d0%ba%d0%be%d0%bc-python)
+1. __get_proxy_list__ выгружает из _proxylist.geonode.com_ в __/rc/proxylist.txt__ актуальные прокси (~5000 шт)
+2. **get_vacanciesID_by_API.py** получает все ID вакансий в __/rc/find_results/text={TEXT}.dat__ (не более 2000) — внутри в переменной TEXT указать поисковый запрос 
+> альтернативное развитие (отброшено; ):  
+> - requests - из страницы парсится 20 из 50 вакансий (виноват JS)
+> - selenium - рабочий способ, но страница долго загружается
 
-~~2. **parsing_hrefs.py** парсит инфу о ПИФах по ссылкам из
-___investfunds.ru-hrefs.csv___ в *__investfunds-PIFs.csv__*;
-подгружает прокси из файла _proxylist.txt_~~
 
-~~3. **analytics.py** делает ковариационную матрицу из данных
-*__investfunds-PIFs.csv__*, визуализирует в картинку ___heatmap.png___~~
 
-~~- **test.py** хранит временный код (черновик)~~
+3. **get_vacancies_data_from_IDs.py** загружает инфо о каждой вакансии (только description и key_skills) по ID из
+  __/rc/find_results/text={TEXT}.dat__ в папку __/rc/find_results/text={TEXT}/__; в __/rc/find_results/text={TEXT}.log__ пишутся ошибки соединения;
+    для выгрузки вакансии используЮтся прокси из файла _proxylist.json_  
+4. __words_list.py__ формируется список наиболее употребляемых слов в разных формах, со списком следующих за ними слов 
+    (аналог подсказок сверху клавиатуры смартфона при наборе текста) в файл **/rc/find_results/text={TEXT}_words.json**; 
+    в **/rc/find_results/text={TEXT}_key_skills.json** пишутся все попавшиеся ключевые навыки;
+    к каждому слову в обоих файлах прикреплено количество употребления и произведена сортировка слов по этому значению
+    
+5. 
+
+
+- **test.py** хранит временный код (черновик)
+

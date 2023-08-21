@@ -1,8 +1,14 @@
-import requests
 import json
+from datetime import datetime
 
 
-URL_SITE = "https://novosibirsk.hh.ru/search/vacancy?text=&salary=&area=4&ored_clusters=true"
-place_to_insert = URL_SITE.index('?text=') + 6
-# r = requests.get(URL_SITE[:place_to_insert] + input().replace("+", ' ') + URL_SITE[place_to_insert:])
-print(URL_SITE[:place_to_insert] + input().replace(" ", '+') + URL_SITE[place_to_insert:])
+print('который' == 'который̆')
+words = dict()
+with open('./rc/find_results/text=python_words.json', encoding="UTF-8") as f:
+    words = json.load(f)
+    for word_normalized in words:
+        words[word_normalized] = dict(sorted(words[word_normalized].items(), key=lambda x: x[1], reverse=True))
+    words = dict(sorted(words.items(), key=lambda x: x[1]['count'], reverse=True))
+
+
+print(str(datetime.now())[:-3])
