@@ -18,7 +18,7 @@ def get_ids_in_page(params, vac_count: int):
 
 
 def pages(params):
-    time.sleep(2.3)
+    time.sleep(0.3)
     req = requests.get('https://api.hh.ru/vacancies', params)
     num_of_vacancies = int(json.loads(req.text)['found'])
     max_page = num_of_vacancies // params['per_page']
@@ -31,7 +31,7 @@ def pages(params):
 vacancy_ids = []
 page_count = count()
 vacancies_count = 0
-for area in range(4, 5):  # От Москвы до Новосибирска
+for area in range(1, 5):  # От Москвы до Новосибирска
     print(area)
     params = {
         'text': TEXT,  # Текст фильтра. В имени должно быть слово "Аналитик"
