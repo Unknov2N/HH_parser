@@ -7,6 +7,7 @@ import fake_useragent
 import pandas as pd
 import json
 import time
+import random
 
 import itertools
 import copy
@@ -48,7 +49,7 @@ def get_hrefs_selenium(query: str, area: int):
             keys['page'] = numpage
             url = f"https://novosibirsk.hh.ru/search/vacancy?text={query}&area={area}&page={numpage}"
             browser.get(url)
-            time.sleep(1)
+            time.sleep(random.rand() + 0.14)
 
             # тут должна быть проверка на status code == 200
 

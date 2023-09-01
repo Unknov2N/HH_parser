@@ -1,3 +1,5 @@
+import random
+
 import requests
 from bs4 import BeautifulSoup as bs
 from selenium import webdriver
@@ -43,7 +45,7 @@ def get_hrefs_requests_plus_bs(query: str):
 
             keys['page'] = numpage
             r = requests.get(URL_SITE, params=keys, headers={"user-agent":ua.random}, proxies=proxy_list[next(num_of_proxy)])
-            time.sleep(30)
+            time.sleep(random.randint(16,43))
             if r.status_code != 200 or r.status_code != 200:
                 print(f"\nERROR: cannot create connection to {r.url}\nstatus code {r.status_code}\n")
                 return None

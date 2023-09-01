@@ -5,7 +5,7 @@ import random
 
 
 COUNT_NEXT_WORDS = 5
-PATH = 'rc/find_results/text='
+PATH = 'rc/find_results/'
 REQUEST_TEXT = 'python/'
 
 
@@ -131,5 +131,5 @@ def randomized_texts(texts_count_=3, max_words_count_=20, count_next_words_=5):
 
 
 if __name__ == '__main__':
-    #main()
-    randomized_texts()
+    main()
+    #randomized_texts()
