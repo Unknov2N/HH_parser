@@ -11,14 +11,14 @@ TIMEOUT = 0.3
 
 def logging(logs: io.TextIOWrapper, text: str):
     print(datetime.now(), text)
-    logs.write(str(datetime.now()) + ': ' + text + '\n')
+    logs.write(str(datetime.now())[:-7] + ': ' + text + '\n')
 
 
 if __name__ == '__main__':
     logs = open('script_collector_to_stats.log', 'a', encoding='u8')
     file_requests = open('rc/requests.txt', encoding='u8')
     for request in file_requests:
-        if not request.replace(' ', ''):
+        if request.replace(' ', '') == '':
             continue
         logging(logs, 'запрос: ' + request)
         request = request[:-1]

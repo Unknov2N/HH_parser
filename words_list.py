@@ -3,9 +3,10 @@ from itertools import count
 import os
 import json
 import pymorphy3
+import re
 from datetime import datetime
 
-PATH = './rc/find_results/text=python'
+PATH = './rc/find_results/python'
 CHARS_TO_DELETE = r"~[]{};,.|!@#$%^&*()_+`\"'№;:?="
 
 
@@ -92,6 +93,11 @@ def collect_words_from_vacancies_info(path=PATH):
         words_without_next = dict(sorted({i: words[i]['count'] for i in list(words.keys())}.items(),
                                          key=lambda x: x[1], reverse=True))
         f_words.write(json.dumps(words_without_next, indent=2, ensure_ascii=False))
+    with open(path + '/words_en.json', 'w', encoding="UTF-8") as f_words_en:
+        words_en = dict(sorted({i: words[i]['count'] for i in list(words.keys())
+                                if not bool(re.search('[А-Яа-я]', i))}.items(),
+                               key=lambda x: x[1], reverse=True))
+        f_words_en.write(json.dumps(words_en, indent=2, ensure_ascii=False))
     '''with open(PATH + '/' + filename + '/key_skills.json', 'w', encoding="UTF-8") as f_key_skills:
         f_key_skills.write(json.dumps(key_skills, indent=2, ensure_ascii=False))'''
     time2 = datetime.now()
@@ -101,6 +107,7 @@ def collect_words_from_vacancies_info(path=PATH):
               f'{delta_time} seconds passed, '
               f'{num_of_vacancies / delta_time } per sec processed; STOP\n')
     log.close()
+
 
 if __name__ == '__main__':
     collect_words_from_vacancies_info()

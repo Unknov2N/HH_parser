@@ -95,6 +95,7 @@ def collect_vacancies_info(path=PATH + TEXT, timeout=TIMEOUT):
                 'salary': data['salary']
             }
 
+
             vacancy_name = data['name']
             for key_skill in job_info['key_skills']:
                 if key_skill in uniq_key_skills:
@@ -112,23 +113,24 @@ def collect_vacancies_info(path=PATH + TEXT, timeout=TIMEOUT):
                 # тут должно быть приравнивание ключевых навыков (осторожно в блоке else, нужно грамотно задеть существующие и добавить новые)
 
                 full_file_output_name = path + '/vacancies_description/' + vacancy_name_to_file + '.json'
-                with open(full_file_output_name, 'w', encoding="UTF-8") as file_output:
-                    file_output.write(json.dumps(job_info, ensure_ascii=False))
-                    print(indx, id[:-1], vacancy_name)
+                print(indx, id[:-1], vacancy_name)
             else:
                 full_file_output_name = path + '/vacancies_description/' + vacancy_name_to_file + ' (' \
                                         + str(uniq_names[vacancy_name]['count']) + ').json'
                 #get_vacancies_data_log.write(f'rename file, PATH: {full_file_output_name}\n')
-                with open(full_file_output_name, 'w', encoding="UTF-8") as file_output:
-                    file_output.write(json.dumps(job_info, ensure_ascii=False))
-                    print(f'{indx} {id[:-1]} '
-                          f'{vacancy_name} ({uniq_names[vacancy_name]["count"]})')
+                print(f'{indx} {id[:-1]} '
+                      f'{vacancy_name} ({uniq_names[vacancy_name]["count"]})')
                 uniq_names[vacancy_name]['count'] += 1
                 for skill in job_info['key_skills']:
                     if skill in uniq_names[vacancy_name]['key_skills']:
                         uniq_names[vacancy_name]['key_skills'][skill] += 1
                     else:
                         uniq_names[vacancy_name]['key_skills'][skill] = 1
+
+            with open(full_file_output_name, 'w', encoding="UTF-8") as file_output, \
+                    open(full_file_output_name[:-5] + '_full.json', 'w', encoding="UTF-8") as file_full_job_info:
+                file_output.write(json.dumps(job_info, ensure_ascii=False))
+                file_full_job_info.write(json.dumps(data, ensure_ascii=False))
 
         uniq_names_withount_keys = {key: uniq_names[key]['count'] for key in uniq_names}
         uniq_names_withount_keys = dict(sorted(list(uniq_names_withount_keys.items()),
